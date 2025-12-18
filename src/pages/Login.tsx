@@ -1,11 +1,35 @@
-import { useState } from "react";
+import React, { useState, type JSX } from "react";
 import signInIcon from "../asset/signin.gif";
 import { IoIosEye } from "react-icons/io";
 import { IoIosEyeOff } from "react-icons/io";
 import { Link } from "react-router";
 
-export default function Login() {
-  const [showPassword, setShowPassword] = useState(false);
+interface LoginFormData {
+  email: string;
+  password: string;
+}
+
+export default function Login(): JSX.Element {
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [formData, setFormData] = useState<LoginFormData>({
+    email: "",
+    password: "",
+  });
+
+  const { email, password } = formData;
+
+  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setFormData((prev) => ({
+      ...prev,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
+  const onFormSubmit = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    console.log(formData);
+  };
+
   return (
     <section id="login">
       <div className="mx-auto container p-4">
@@ -15,13 +39,16 @@ export default function Login() {
             alt="signin icon"
             className="w-20 h-20 mx-auto"
           />
-          <form>
+          <form onSubmit={onFormSubmit}>
             <label htmlFor="email">Email</label>
             <div className="bg-slate-100 rounded-md">
               <input
                 id="email"
                 type="text"
                 placeholder="Enter Email"
+                name="email"
+                value={email}
+                onChange={handleOnChange}
                 className="outline-none w-full h-9 bg-transparent pl-1"
               />
             </div>
@@ -31,6 +58,9 @@ export default function Login() {
                 id="password"
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter Password"
+                name="password"
+                value={password}
+                onChange={handleOnChange}
                 className="outline-none w-full h-9 bg-transparent pl-1"
               />
               <div
