@@ -1,7 +1,15 @@
+import { Outlet } from "react-router";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+
 function App() {
   return (
     <>
-      <h3>Hello World!!!</h3>
+      <Header />
+      <main>
+        <Outlet />
+      </main>
+      <Footer />
     </>
   );
 }
