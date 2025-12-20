@@ -34,7 +34,7 @@ export default function Header() {
           </div>
           <div>
             <Link
-              to="/login"
+              to="/log-in"
               className="bg-amber-800 px-3 py-1 rounded-full text-white font-medium"
             >
               Login
