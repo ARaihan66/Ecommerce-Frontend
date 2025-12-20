@@ -19,13 +19,10 @@ const router = createBrowserRouter([
         Component: Login,
       },
       {
-<<<<<<< HEAD
-=======
         path: "/sign-up",
         Component: SignUp,
       },
       {
->>>>>>> a6de92d98bd19a84a281a41b6b86fc1c55737db2
         path: "/forgot-password",
         Component: ForgotPassword,
       },
