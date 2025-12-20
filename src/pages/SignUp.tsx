@@ -4,6 +4,7 @@ import { IoIosEye } from "react-icons/io";
 import { IoIosEyeOff } from "react-icons/io";
 import { Link } from "react-router";
 import toast from "react-hot-toast";
+import SummaryApi from "../common";
 
 interface SigninFormData {
   username: string;
@@ -50,7 +51,7 @@ const SignUp: React.FC = () => {
     event.preventDefault();
 
     if (password !== confirmPassword) {
-      toast("Password and confirm password does not match.");
+      toast.error("Password and confirm password does not match.");
       return;
     }
 
@@ -59,13 +60,34 @@ const SignUp: React.FC = () => {
     payload.append("username", username);
     payload.append("email", email);
     payload.append("password", password);
-    payload.append("confirmPassword", confirmPassword);
 
     if (profilePic) {
       payload.append("profilePic", profilePic);
     }
 
-    console.log([...payload.entries()]);
+    const response = await fetch(SummaryApi.signUP.url, {
+      method: SummaryApi.signUP.method,
+      body: payload,
+    });
+
+    const result = await response.json();
+
+    if (result.status) {
+      toast.success("User registered successfully");
+      setFormData({
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        profilePic: null,
+      });
+      setImagePreview(null);
+      return;
+    } else {
+      toast.error(result.message);
+    }
+
+    console.log(result);
   };
 
   return (
