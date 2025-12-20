@@ -1,6 +1,7 @@
 import { Outlet } from "react-router";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <main className="min-h-[calc(100vh-100px)]">
         <Outlet />
       </main>
+      <Toaster />
       <Footer />
     </>
   );

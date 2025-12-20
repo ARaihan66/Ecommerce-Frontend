@@ -1,4 +1,4 @@
-import React, { useState, type JSX } from "react";
+import React, { useState } from "react";
 import signInIcon from "../asset/signin.gif";
 import { IoIosEye } from "react-icons/io";
 import { IoIosEyeOff } from "react-icons/io";
@@ -9,7 +9,7 @@ interface LoginFormData {
   password: string;
 }
 
-export default function Login(): JSX.Element {
+const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [formData, setFormData] = useState<LoginFormData>({
     email: "",
@@ -25,7 +25,9 @@ export default function Login(): JSX.Element {
     }));
   };
 
-  const onFormSubmit = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onFormSubmit = async (
+    event: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     event.preventDefault();
     console.log(formData);
   };
@@ -37,11 +39,11 @@ export default function Login(): JSX.Element {
           <img
             src={signInIcon}
             alt="signin icon"
-            className="w-20 h-20 mx-auto"
+            className="w-20 h-20 mx-auto rounded-full"
           />
-          <form onSubmit={onFormSubmit}>
+          <form onSubmit={onFormSubmit} className="flex flex-col gap-2">
             <label htmlFor="email">Email</label>
-            <div className="bg-slate-100 rounded-md">
+            <div className="bg-slate-100 rounded-md ">
               <input
                 id="email"
                 type="text"
@@ -53,7 +55,7 @@ export default function Login(): JSX.Element {
               />
             </div>
             <label htmlFor="password">Password</label>
-            <div className="bg-slate-100 rounded-md flex items-center pr-2">
+            <div className="bg-slate-100 rounded-md flex items-center pr-2 ">
               <input
                 id="password"
                 type={showPassword ? "text" : "password"}
@@ -86,11 +88,13 @@ export default function Login(): JSX.Element {
           <div className="text-center mt-2">
             Don't have an account?
             <span className="hover:underline hover:text-red-700 ml-2">
-              <Link to={"/sign-in"}>Sign in</Link>
+              <Link to={"/sign-up"}>Sign Up</Link>
             </span>
           </div>
         </div>
       </div>
     </section>
   );
-}
+};
+
+export default Login;
