@@ -65,8 +65,8 @@ const SignUp: React.FC = () => {
       payload.append("profilePic", profilePic);
     }
 
-    const response = await fetch(SummaryApi.signUP.url, {
-      method: SummaryApi.signUP.method,
+    const response = await fetch(SummaryApi.signUp.url, {
+      method: SummaryApi.signUp.method,
       body: payload,
     });
 
