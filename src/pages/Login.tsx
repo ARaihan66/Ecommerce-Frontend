@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import signInIcon from "../asset/signin.gif";
 import { IoIosEye } from "react-icons/io";
 import { IoIosEyeOff } from "react-icons/io";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import SummaryApi from "../common";
+import toast from "react-hot-toast";
 
 interface LoginFormData {
   email: string;
@@ -16,6 +17,8 @@ const Login: React.FC = () => {
     email: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   const { email, password } = formData;
 
@@ -38,9 +41,17 @@ const Login: React.FC = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formData),
+      credentials: "include",
     });
 
     const result = await response.json();
+
+    if (result.success) {
+      toast.success(result.message);
+      navigate("/");
+    } else if (result.error) {
+      toast.error(result.message);
+    }
 
     console.log(result);
   };
