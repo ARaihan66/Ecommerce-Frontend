@@ -9,11 +9,16 @@ interface ApiConfig {
 
 interface SummaryApiType {
   signUp: ApiConfig;
+  signIn: ApiConfig;
 }
 
 const SummaryApi: SummaryApiType = {
   signUp: {
     url: `${backendDomain}/api/user/signup`,
+    method: "post",
+  },
+  signIn: {
+    url: `${backendDomain}/api/user/signin`,
     method: "post",
   },
 };

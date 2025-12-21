@@ -3,6 +3,7 @@ import signInIcon from "../asset/signin.gif";
 import { IoIosEye } from "react-icons/io";
 import { IoIosEyeOff } from "react-icons/io";
 import { Link } from "react-router";
+import SummaryApi from "../common";
 
 interface LoginFormData {
   email: string;
@@ -30,6 +31,18 @@ const Login: React.FC = () => {
   ): Promise<void> => {
     event.preventDefault();
     console.log(formData);
+
+    const response = await fetch(SummaryApi.signIn.url, {
+      method: SummaryApi.signIn.method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const result = await response.json();
+
+    console.log(result);
   };
 
   return (
