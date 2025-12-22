@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import signInIcon from "../asset/signin.gif";
 import { IoIosEye } from "react-icons/io";
 import { IoIosEyeOff } from "react-icons/io";
 import { Link, useNavigate } from "react-router";
 import SummaryApi from "../common";
 import toast from "react-hot-toast";
+import { currentUserContext } from "../context";
 
 interface LoginFormData {
   email: string;
@@ -19,6 +20,7 @@ const Login: React.FC = () => {
   });
 
   const navigate = useNavigate();
+  const { fetchUserData } = useContext(currentUserContext);
 
   const { email, password } = formData;
 
@@ -49,7 +51,8 @@ const Login: React.FC = () => {
     if (result.success) {
       toast.success(result.message);
       navigate("/");
-    } else if (result.error) {
+      fetchUserData();
+    } else {
       toast.error(result.message);
     }
 

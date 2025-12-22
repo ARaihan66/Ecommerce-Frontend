@@ -76,17 +76,9 @@ const SignUp: React.FC = () => {
 
     if (result.success) {
       toast.success("User registered successfully");
-      setFormData({
-        username: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        profilePic: null,
-      });
-      setImagePreview(null);
       navigate("/log-in");
       return;
-    } else if (result.error) {
+    } else {
       toast.error(result.message);
     }
     console.log(result);
