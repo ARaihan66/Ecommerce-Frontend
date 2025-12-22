@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import signInIcon from "../asset/signin.gif";
 import { IoIosEye } from "react-icons/io";
 import { IoIosEyeOff } from "react-icons/io";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import SummaryApi from "../common";
 
@@ -24,6 +24,8 @@ const SignUp: React.FC = () => {
     profilePic: null,
   });
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+  const navigate = useNavigate();
 
   const { username, email, password, confirmPassword, profilePic } = formData;
 
@@ -65,28 +67,20 @@ const SignUp: React.FC = () => {
       payload.append("profilePic", profilePic);
     }
 
-    const response = await fetch(SummaryApi.signUP.url, {
-      method: SummaryApi.signUP.method,
+    const response = await fetch(SummaryApi.signUp.url, {
+      method: SummaryApi.signUp.method,
       body: payload,
     });
 
     const result = await response.json();
 
-    if (result.status) {
+    if (result.success) {
       toast.success("User registered successfully");
-      setFormData({
-        username: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        profilePic: null,
-      });
-      setImagePreview(null);
+      navigate("/log-in");
       return;
     } else {
       toast.error(result.message);
     }
-
     console.log(result);
   };
 
