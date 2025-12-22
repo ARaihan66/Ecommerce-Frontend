@@ -2,8 +2,12 @@ import { createBrowserRouter } from "react-router";
 import App from "../App";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
-import SignIn from "../pages/SignIn";
 import ForgotPassword from "../pages/ForgotPassword";
+import SignUp from "../pages/SignUp";
+import { AdminPanel } from "../pages/AdminPanel";
+import { Component } from "react";
+import { AllUsers } from "../pages/AllUsers";
+import { AllProducts } from "../pages/AllProducts";
 
 const router = createBrowserRouter([
   {
@@ -15,16 +19,24 @@ const router = createBrowserRouter([
         Component: Home,
       },
       {
-        path: "/login",
+        path: "/log-in",
         Component: Login,
       },
       {
-        path: "/sign-in",
-        Component: SignIn,
+        path: "/sign-up",
+        Component: SignUp,
       },
       {
         path: "/forgot-password",
         Component: ForgotPassword,
+      },
+      {
+        path: "/admin-panel",
+        Component: AdminPanel,
+        children: [
+          { path: "all-users", Component: AllUsers },
+          { path: "all-products", Component: AllProducts },
+        ],
       },
     ],
   },
