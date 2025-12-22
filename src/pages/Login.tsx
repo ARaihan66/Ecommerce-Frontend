@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import signInIcon from "../asset/signin.gif";
 import { IoIosEye } from "react-icons/io";
 import { IoIosEyeOff } from "react-icons/io";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import SummaryApi from "../common";
+import toast from "react-hot-toast";
+import { currentUserContext } from "../context";
 
 interface LoginFormData {
   email: string;
@@ -15,6 +18,9 @@ const Login: React.FC = () => {
     email: "",
     password: "",
   });
+
+  const navigate = useNavigate();
+  const { fetchUserData } = useContext(currentUserContext);
 
   const { email, password } = formData;
 
@@ -30,6 +36,27 @@ const Login: React.FC = () => {
   ): Promise<void> => {
     event.preventDefault();
     console.log(formData);
+
+    const response = await fetch(SummaryApi.signIn.url, {
+      method: SummaryApi.signIn.method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+      credentials: "include",
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      toast.success(result.message);
+      navigate("/");
+      fetchUserData();
+    } else {
+      toast.error(result.message);
+    }
+
+    console.log(result);
   };
 
   return (
