@@ -7,8 +7,11 @@ import type { RootState } from "@reduxjs/toolkit/query";
 import SummaryApi from "../common";
 import toast from "react-hot-toast";
 import { SetUserDetails } from "../features/user/UserSlice";
+import { useState } from "react";
 
 export default function Header() {
+  const [menuDisplay, setMenuDisplay] = useState<boolean>(false);
+
   const userInfo = useSelector((state: RootState) => state.user.userDetails);
   const dispatch = useDispatch();
   console.log(userInfo);
@@ -49,8 +52,23 @@ export default function Header() {
           </div>
         </div>
         <div className="flex items-center gap-10">
-          <div className="text-3xl text-blue-700">
-            <FaRegUserCircle />
+          <div className="flex justify-center items-center relative">
+            <div
+              className="text-3xl text-blue-700 cursor-pointer"
+              onClick={() => setMenuDisplay(!menuDisplay)}
+            >
+              <FaRegUserCircle />
+            </div>
+            {menuDisplay ? (
+              <div className="absolute bg-white bottom-0 top-11 h-fit p-2 shadow-lg rounded hidden md:block">
+                <nav
+                  className="whitespace-nowrap bg-slate-100 p-2"
+                  onClick={() => setMenuDisplay(!menuDisplay)}
+                >
+                  <Link to={"admin-panel"}>Admin panel</Link>
+                </nav>
+              </div>
+            ) : null}
           </div>
           <div className="text-2xl relative">
             <span>
