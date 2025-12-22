@@ -1,15 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export interface user {
-  username: string;
-  email: string;
-  profilePic: string;
-}
+// export interface user {
+//   username: string;
+//   email: string;
+//   profilePic: string;
+// }
 
-const initialState: user = {
-  username: "",
-  email: "",
-  profilePic: "",
+const initialState = {
+  userDetails: Object,
 };
 
 export const userSlice = createSlice({
@@ -19,6 +17,10 @@ export const userSlice = createSlice({
     SetUserDetails: (state, action) => {
       console.log(state);
       console.log(action.payload);
+      state.userDetails = action.payload;
+      //   state.username = action.payload.username;
+      //   state.email = action.payload.email;
+      //   state.profilePic = action.payload.profilePic;
     },
   },
 });

@@ -1,9 +1,37 @@
 import { IoSearchOutline } from "react-icons/io5";
 import { FaRegUserCircle } from "react-icons/fa";
 import { FaCartPlus } from "react-icons/fa6";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "@reduxjs/toolkit/query";
+import SummaryApi from "../common";
+import toast from "react-hot-toast";
+import { SetUserDetails } from "../features/user/UserSlice";
 
 export default function Header() {
+  const userInfo = useSelector((state: RootState) => state.user.userDetails);
+  const dispatch = useDispatch();
+  console.log(userInfo);
+
+  const navigate = useNavigate();
+
+  const handleLogOut = async () => {
+    const response = await fetch(SummaryApi.signOutUser.url, {
+      method: SummaryApi.signOutUser.method,
+      credentials: "include",
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      toast.success(result.message);
+      dispatch(SetUserDetails(null));
+      navigate("/log-in");
+    } else {
+      toast.error(result.message);
+    }
+  };
+
   return (
     <header className="h-16 shadow-md bg-white">
       <div className=" h-full container mx-auto flex items-center justify-between px-4">
@@ -33,12 +61,21 @@ export default function Header() {
             </div>
           </div>
           <div>
-            <Link
-              to="/log-in"
-              className="bg-amber-800 px-3 py-1 rounded-full text-white font-medium"
-            >
-              Login
-            </Link>
+            {userInfo && userInfo._id ? (
+              <span
+                className="bg-amber-800 px-3 py-1 rounded-full text-white font-medium cursor-pointer"
+                onClick={handleLogOut}
+              >
+                Sign Out
+              </span>
+            ) : (
+              <Link
+                to="/log-in"
+                className="bg-amber-800 px-3 py-1 rounded-full text-white font-medium"
+              >
+                Sign In
+              </Link>
+            )}
           </div>
         </div>
       </div>

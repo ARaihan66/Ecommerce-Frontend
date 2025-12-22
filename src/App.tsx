@@ -5,16 +5,27 @@ import { Toaster } from "react-hot-toast";
 import SummaryApi from "./common";
 import { useEffect } from "react";
 import { currentUserContext } from "./context";
+import { useDispatch } from "react-redux";
+import { SetUserDetails } from "./features/user/UserSlice";
 
 function App() {
+  const dispatch = useDispatch();
   const fetchUserData = async () => {
-    return await fetch(SummaryApi.currentUser.url, {
+    const response = await fetch(SummaryApi.currentUser.url, {
       method: SummaryApi.currentUser.method,
       headers: {
         "Content-Type": "application/json",
       },
       credentials: "include",
     });
+
+    const result = await response.json();
+
+    console.log(result);
+
+    if (result) {
+      dispatch(SetUserDetails(result.data));
+    }
   };
 
   useEffect(() => {

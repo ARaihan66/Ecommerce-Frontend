@@ -11,6 +11,7 @@ interface SummaryApiType {
   signUp: ApiConfig;
   signIn: ApiConfig;
   currentUser: ApiConfig;
+  signOutUser: ApiConfig;
 }
 
 const SummaryApi: SummaryApiType = {
@@ -24,6 +25,10 @@ const SummaryApi: SummaryApiType = {
   },
   currentUser: {
     url: `${backendDomain}/api/user/details`,
+    method: "get",
+  },
+  signOutUser: {
+    url: `${backendDomain}/api/user/sign-out`,
     method: "get",
   },
 };
