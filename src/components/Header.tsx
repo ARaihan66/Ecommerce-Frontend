@@ -8,6 +8,7 @@ import SummaryApi from "../common";
 import toast from "react-hot-toast";
 import { SetUserDetails } from "../features/user/UserSlice";
 import { useState } from "react";
+import UserRole from "../common/userRole";
 
 export default function Header() {
   const [menuDisplay, setMenuDisplay] = useState<boolean>(false);
@@ -53,22 +54,24 @@ export default function Header() {
         </div>
         <div className="flex items-center gap-10">
           <div className="flex justify-center items-center relative">
-            <div
-              className="text-3xl text-blue-700 cursor-pointer"
-              onClick={() => setMenuDisplay(!menuDisplay)}
-            >
-              <FaRegUserCircle />
-            </div>
-            {menuDisplay ? (
+            {userInfo?._id && (
+              <div
+                className="text-3xl text-blue-700 cursor-pointer"
+                onClick={() => setMenuDisplay(!menuDisplay)}
+              >
+                <FaRegUserCircle />
+              </div>
+            )}
+            {menuDisplay && userInfo.role === UserRole.Admin && (
               <div className="absolute bg-white bottom-0 top-11 h-fit p-2 shadow-lg rounded hidden md:block">
                 <nav
                   className="whitespace-nowrap bg-slate-100 p-2"
                   onClick={() => setMenuDisplay(!menuDisplay)}
                 >
-                  <Link to={"admin-panel"}>Admin panel</Link>
+                  <Link to={"/admin-panel/all-products"}>Admin panel</Link>
                 </nav>
               </div>
-            ) : null}
+            )}
           </div>
           <div className="text-2xl relative">
             <span>

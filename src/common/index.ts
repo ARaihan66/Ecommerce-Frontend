@@ -13,6 +13,7 @@ interface SummaryApiType {
   currentUser: ApiConfig;
   signOutUser: ApiConfig;
   getAllUsers: ApiConfig;
+  updateUserRole: ApiConfig;
 }
 
 const SummaryApi: SummaryApiType = {
@@ -35,6 +36,10 @@ const SummaryApi: SummaryApiType = {
   getAllUsers: {
     url: `${backendDomain}/api/user/get-all`,
     method: "get",
+  },
+  updateUserRole: {
+    url: `${backendDomain}/api/user/role-update`,
+    method: "post",
   },
 };
 
