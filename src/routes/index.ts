@@ -5,7 +5,6 @@ import Login from "../pages/Login";
 import ForgotPassword from "../pages/ForgotPassword";
 import SignUp from "../pages/SignUp";
 import { AdminPanel } from "../pages/AdminPanel";
-import { Component } from "react";
 import { AllUsers } from "../pages/AllUsers";
 import { AllProducts } from "../pages/AllProducts";
 
