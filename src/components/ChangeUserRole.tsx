@@ -19,9 +19,11 @@ const ChangeUserRole = ({
   onCloseModal,
   fetchAllUserData,
 }: ChangeUserRoleProps) => {
-  const [userRole, setUserRole] = useState<string>("");
+  const [userRole, setUserRole] = useState<string>(role);
 
-  const handleOnChange = (event: React.ChangeEvent<HTMLOptionElement>) => {
+  const handleOnChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ): void => {
     setUserRole(event.target.value);
   };
 
@@ -68,7 +70,7 @@ const ChangeUserRole = ({
           <div className="flex gap-5">
             <p className="font-medium">Role :</p>
             <select
-              value={role}
+              value={userRole}
               className="outline-none max-w-32 w-full bg-slate-200 py-1 px-2 rounded"
               onChange={handleOnChange}
             >

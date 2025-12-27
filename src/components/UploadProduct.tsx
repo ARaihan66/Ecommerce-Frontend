@@ -3,6 +3,8 @@ import { IoMdClose } from "react-icons/io";
 import { IoCloudUploadSharp } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
 import SummaryApi from "../common";
+import toast from "react-hot-toast";
+import { category } from "../helper/category";
 
 interface UploadProductProps {
   onClose: () => void;
@@ -82,8 +84,6 @@ const UploadProduct: React.FC<UploadProductProps> = ({ onClose }) => {
       });
     }
 
-    console.log(data.productImage);
-
     const response = await fetch(SummaryApi.productUpload.url, {
       method: SummaryApi.productUpload.method,
       credentials: "include",
@@ -92,7 +92,20 @@ const UploadProduct: React.FC<UploadProductProps> = ({ onClose }) => {
 
     const result = await response.json();
 
-    console.log(result);
+    if (result.success) {
+      setData({
+        productName: "",
+        brandName: "",
+        category: "",
+        price: "",
+        sellingPrice: "",
+        description: "",
+        productImage: [],
+      });
+      onClose();
+    } else {
+      toast.error(result.message);
+    }
   };
 
   return (
@@ -144,9 +157,11 @@ const UploadProduct: React.FC<UploadProductProps> = ({ onClose }) => {
             onChange={handleOnChange}
             className=" outline-none bg-slate-100 pl-1 py-2 rounded"
           >
-            <option value="">Select Category</option>
-            <option value="A">A</option>
-            <option value="B">B</option>
+            {category.map((item) => (
+              <option key={item.id} value={item.label}>
+                {item.label}
+              </option>
+            ))}
           </select>
           <label className="font-medium">Upload Image</label>
           <label htmlFor="uploadImage">
