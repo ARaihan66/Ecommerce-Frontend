@@ -103,6 +103,7 @@ const UploadProduct: React.FC<UploadProductProps> = ({ onClose }) => {
         productImage: [],
       });
       onClose();
+      toast.success(result.message);
     } else {
       toast.error(result.message);
     }

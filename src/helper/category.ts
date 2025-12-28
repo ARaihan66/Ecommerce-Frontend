@@ -1,50 +1,54 @@
 export const category = [
   {
+    id: 0,
+    label: "Select category",
+  },
+  {
     id: 1,
-    label: "airpods",
+    label: "Airpods",
   },
   {
     id: 2,
-    label: "camera",
+    label: "Camera",
   },
   {
     id: 3,
-    label: "earphones",
+    label: "Earphones",
   },
   {
     id: 4,
-    label: "mobile",
+    label: "Mobile",
   },
   {
     id: 5,
-    label: "mouse",
+    label: "Mouse",
   },
   {
     id: 6,
-    label: "printer",
+    label: "Printer",
   },
   {
     id: 7,
-    label: "processor",
+    label: "Processor",
   },
   {
     id: 8,
-    label: "refrigerator",
+    label: "Refrigerator",
   },
   {
     id: 9,
-    label: "speakers",
+    label: "Speakers",
   },
   {
     id: 10,
-    label: "trimmers",
+    label: "Trimmers",
   },
   {
     id: 11,
-    label: "Tv",
+    label: "TV",
   },
   {
     id: 12,
-    label: "watches",
+    label: "Watches",
   },
 ];
