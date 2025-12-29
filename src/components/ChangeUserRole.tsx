@@ -4,13 +4,7 @@ import type React from "react";
 import { useState } from "react";
 import SummaryApi from "../common";
 import toast from "react-hot-toast";
-
-interface ChangeUserRoleProps {
-  username: string;
-  email: string;
-  role: string;
-  onCloseModal: () => void;
-}
+import type { IChangeUserRole } from "../types/User";
 
 const ChangeUserRole = ({
   username,
@@ -18,7 +12,7 @@ const ChangeUserRole = ({
   role,
   onCloseModal,
   fetchAllUserData,
-}: ChangeUserRoleProps) => {
+}: IChangeUserRole) => {
   const [userRole, setUserRole] = useState<string>(role);
 
   const handleOnChange = (
@@ -46,8 +40,6 @@ const ChangeUserRole = ({
     } else {
       toast.error(result.message);
     }
-
-    console.log(result);
   };
 
   return (

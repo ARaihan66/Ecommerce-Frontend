@@ -15,6 +15,7 @@ interface SummaryApiType {
   getAllUsers: ApiConfig;
   updateUserRole: ApiConfig;
   productUpload: ApiConfig;
+  getAllProduct: ApiConfig;
 }
 
 const SummaryApi: SummaryApiType = {
@@ -45,6 +46,10 @@ const SummaryApi: SummaryApiType = {
   productUpload: {
     url: `${backendDomain}/api/product/create`,
     method: "post",
+  },
+  getAllProduct: {
+    url: `${backendDomain}/api/product/get`,
+    method: "get",
   },
 };
 

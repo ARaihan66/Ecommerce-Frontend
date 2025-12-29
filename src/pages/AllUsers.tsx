@@ -3,33 +3,28 @@ import SummaryApi from "../common";
 import moment from "moment";
 import { MdEdit } from "react-icons/md";
 import ChangeUserRole from "../components/ChangeUserRole";
-
-interface User {
-  username: string;
-  email: string;
-  role: string;
-}
+import type { IUser } from "../types/User";
 
 export const AllUsers: React.FC = () => {
-  const [allUser, setAllUser] = useState<User[]>([]);
+  const [allUser, setAllUser] = useState<IUser[]>([]);
   const [isOpenUserModals, setIsOpenUserModal] = useState<boolean>(false);
-  const [updateUserInfo, setUpdateUserInfo] = useState<User>(null);
+  const [updateUserInfo, setUpdateUserInfo] = useState<IUser | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchAllUserData = async (): Promise<void> => {
     try {
+      setIsLoading(true);
       const response = await fetch(SummaryApi.getAllUsers.url, {
         method: SummaryApi.getAllUsers.method,
         credentials: "include",
       });
-
       const result = await response.json();
-
-      if (result.success) {
-        console.log();
-        setAllUser(result.users);
-      }
-    } catch (error) {
-      console.log(error.message);
+      setAllUser(result.users);
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -41,7 +36,13 @@ export const AllUsers: React.FC = () => {
     setIsOpenUserModal(false);
   };
 
-  console.log(allUser);
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <h3>{error}</h3>;
+  }
 
   return (
     <>
@@ -57,10 +58,10 @@ export const AllUsers: React.FC = () => {
             <th className="border border-gray-300 px-10 py-2">Action</th>
           </tr>
         </thead>
-        {allUser.length > 0 &&
-          allUser?.map((item, index) => {
-            return (
-              <tbody className="bg-white">
+        <tbody className="bg-white">
+          {allUser.length > 0 &&
+            allUser?.map((item, index) => {
+              return (
                 <tr>
                   <td className="border border-gray-300 text-center px-10 py-2">
                     {index + 1}
@@ -89,11 +90,11 @@ export const AllUsers: React.FC = () => {
                     </button>
                   </td>
                 </tr>
-              </tbody>
-            );
-          })}
+              );
+            })}
+        </tbody>
       </table>
-      {isOpenUserModals ? (
+      {isOpenUserModals && updateUserInfo && (
         <ChangeUserRole
           username={updateUserInfo?.username}
           email={updateUserInfo?.email}
@@ -101,7 +102,7 @@ export const AllUsers: React.FC = () => {
           onCloseModal={onCloseModal}
           fetchAllUserData={fetchAllUserData}
         />
-      ) : null}
+      )}
     </>
   );
 };
